@@ -129,4 +129,9 @@ function computeOutcomeAndPrizes(a, b) {
 }
 
 const PORT = process.env.PORT || 3001;
+app.get('/', (_, res) => {
+  res.type('text/plain').send('OK: Share-or-Steal backend is running');
+});
+
+app.get('/health', (_, res) => res.send('ok')); // keep this
 server.listen(PORT, () => console.log('Server on :' + PORT));
