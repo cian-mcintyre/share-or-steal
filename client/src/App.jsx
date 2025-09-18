@@ -66,25 +66,13 @@ export default function App() {
     return () => s.disconnect();
   }, [locationId]);
 
-const start = async () => {
+const start = () => {
   if (!connected || hasJoined || !name.trim()) return;
-
-  // Ask the backend if this device can play today
-  const res = await fetch(`${SERVER_URL}/can-play`, {
-    method: 'POST',
-    credentials: 'include',   // IMPORTANT: send/receive cookie
-  });
-  const data = await res.json();
-  if (!data.canPlay) {
-    alert("You've already played today. Come back tomorrow!");
-    return;
-  }
-
-  // OK, join the queue
   socketRef.current.emit('join_location', { locationId, playerName: name.trim() });
   setHasJoined(true);
   setStatus('Joined. Waiting for an opponent…');
 };
+
   const submit = (c) => {
     if (!matchId || result) return;
     setChoice(c);
